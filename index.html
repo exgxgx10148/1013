@@ -1,0 +1,1381 @@
+<!DOCTYPE html>
+<html lang="zh-TW" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>沐木 MORI WOOD | 純粹原木・心靈療癒家具</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        wood: {
+                            50: '#FBF9F5',
+                            100: '#F5EFE6',
+                            200: '#E7D8C5',
+                            300: '#D5BA9F',
+                            400: '#BE9977',
+                            500: '#A77C57',
+                            600: '#8C603F',
+                            700: '#6E4732',
+                            800: '#583A2C',
+                            900: '#3C2820',
+                        },
+                        forest: {
+                            50: '#F2F7F4',
+                            100: '#DFEDE5',
+                            200: '#B8D5C4',
+                            500: '#4A6B58',
+                            700: '#344E3F',
+                            800: '#273C30',
+                            900: '#1A2921',
+                        }
+                    },
+                    fontFamily: {
+                        serif: ['"Noto Serif TC"', 'Georgia', 'serif'],
+                        sans: ['"Plus Jakarta Sans"', '"PingFang TC"', '"Microsoft JhengHei"', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300;400;600;700;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- GSAP & ScrollTrigger -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <!-- Custom CSS Styles for Organic Text Animations & Immersion -->
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', 'PingFang TC', sans-serif;
+            background-color: #FBF9F5;
+            color: #273C30;
+            overflow-x: hidden;
+        }
+
+        .font-serif-tc {
+            font-family: 'Noto Serif TC', serif;
+        }
+
+        /* Ambient Grain Texture */
+        .bg-grain {
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.035'/%3E%3C/svg%3E");
+        }
+
+        /* Smooth Hide Scrollbar */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        /* ELEGANT ORGANIC TEXT REVEAL CLASSES */
+        .reveal-mask {
+            overflow: hidden;
+            display: inline-block;
+            vertical-align: top;
+        }
+
+        .reveal-text-item {
+            display: inline-block;
+            transform: translateY(100%);
+            opacity: 0;
+            will-change: transform, opacity, filter;
+        }
+
+        .text-glow-soft {
+            text-shadow: 0 0 30px rgba(167, 124, 87, 0.25);
+        }
+
+        /* Mood State Transition Container */
+        .mood-transition {
+            transition: all 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        /* Custom Range Slider Styling */
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            height: 24px;
+            width: 24px;
+            border-radius: 50%;
+            background: #273C30;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            border: 2px solid #F5EFE6;
+        }
+
+        /* Progressive Image Zoom & Filter Blend */
+        .img-progressive-wrap {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .img-progressive-wrap img {
+            transition: transform 0.9s cubic-bezier(0.16, 1, 0.3, 1), 
+                        filter 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+                        opacity 0.5s ease;
+            filter: brightness(0.96) contrast(1.02) saturate(0.95);
+            will-change: transform, filter;
+        }
+
+        .img-progressive-wrap:hover img {
+            transform: scale(1.08);
+            filter: brightness(1.04) contrast(1.05) saturate(1.18);
+        }
+
+        .img-progressive-wrap .img-overlay-glow {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(39, 60, 48, 0) 40%, rgba(39, 60, 48, 0.45) 100%);
+            opacity: 0.6;
+            transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            pointer-events: none;
+        }
+
+        .img-progressive-wrap:hover .img-overlay-glow {
+            opacity: 0.85;
+        }
+
+        /* Progressive Button Hover & Glow */
+        .btn-progressive {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            z-index: 1;
+        }
+
+        .btn-progressive::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.22), transparent);
+            transition: left 0.7s ease;
+            z-index: -1;
+        }
+
+        .btn-progressive:hover::before {
+            left: 100%;
+        }
+
+        .btn-progressive:hover {
+            transform: translateY(-2px) scale(1.03);
+            box-shadow: 0 12px 30px -6px rgba(39, 60, 48, 0.25);
+        }
+
+        .btn-progressive:active {
+            transform: translateY(0) scale(0.98);
+        }
+
+        /* Interactive 3D Card Hover Depth */
+        .card-tilt {
+            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), 
+                        box-shadow 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+                        border-color 0.4s ease;
+            will-change: transform;
+        }
+
+        .card-tilt:hover {
+            border-color: rgba(167, 124, 87, 0.6);
+            box-shadow: 0 20px 40px -12px rgba(58, 40, 32, 0.15);
+        }
+
+        /* Custom Dynamic Cursor Follower */
+        #cursorFollower {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            transition: width 0.3s ease, height 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
+            mix-blend-mode: difference;
+        }
+
+        #cursorFollower.cursor-active {
+            width: 68px;
+            height: 68px;
+            background-color: rgba(245, 239, 230, 0.85);
+            border-color: transparent;
+        }
+    </style>
+</head>
+<body class="bg-wood-50 text-forest-900 bg-grain antialiased selection:bg-wood-200 selection:text-forest-900">
+
+    <!-- DYNAMIC CURSOR FOLLOWER -->
+    <div id="cursorFollower" class="hidden md:flex items-center justify-center border border-forest-800/50 bg-wood-300/10 backdrop-blur-[1px]">
+        <span id="cursorText" class="text-[9px] font-bold text-forest-900 tracking-wider uppercase opacity-0 transition-opacity duration-300">EXPLORE</span>
+    </div>
+
+    <!-- HEADER NAVBAR -->
+    <header id="navbar" class="fixed top-0 left-0 w-full z-50 transition-all duration-500 py-6 px-6 md:px-12">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+            
+            <!-- Brand Logo -->
+            <a href="#home" class="flex items-center gap-3 group" data-cursor="HOME">
+                <div class="w-10 h-10 rounded-2xl bg-forest-800 text-wood-100 flex items-center justify-center font-serif font-bold text-xl group-hover:scale-110 group-hover:bg-wood-600 transition-all duration-300 shadow-sm">
+                    沐
+                </div>
+                <div class="flex flex-col">
+                    <span class="font-serif-tc font-bold text-xl tracking-wider text-forest-900 leading-none group-hover:text-wood-600 transition-colors">沐木 MORI</span>
+                    <span class="text-[9px] tracking-widest text-wood-600 font-sans uppercase font-bold mt-1">WOOD FURNITURE</span>
+                </div>
+            </a>
+
+            <!-- Desktop Navigation Links -->
+            <nav class="hidden md:flex items-center gap-8 text-xs font-bold tracking-widest text-forest-800 uppercase">
+                <a href="#home" class="hover:text-wood-600 transition-all hover:-translate-y-0.5 py-1">首頁 Home</a>
+                <a href="#brand-story" class="hover:text-wood-600 transition-all hover:-translate-y-0.5 py-1">品牌故事 Story</a>
+                <a href="#philosophy" class="hover:text-wood-600 transition-all hover:-translate-y-0.5 py-1">品牌理念 Philosophy</a>
+                <a href="#interactive-story" class="hover:text-wood-600 transition-all hover:-translate-y-0.5 py-1 text-wood-600">雙向故事 Interactive</a>
+                <a href="#products" class="hover:text-wood-600 transition-all hover:-translate-y-0.5 py-1">產品系列 Products</a>
+                <a href="#experience" class="hover:text-wood-600 transition-all hover:-translate-y-0.5 py-1">五感體驗 Experience</a>
+            </nav>
+
+            <!-- CTA Action Button -->
+            <div class="hidden md:flex items-center gap-4">
+                <a href="#contact" data-cursor="RESERVE" class="btn-progressive px-6 py-3 text-xs font-bold tracking-wider text-forest-50 bg-forest-800 hover:bg-forest-900 rounded-full shadow-md hover:shadow-lg">
+                    預約實體體驗
+                </a>
+            </div>
+
+            <!-- Mobile Menu Toggle -->
+            <button id="mobileMenuBtn" class="md:hidden text-forest-800 text-2xl focus:outline-none p-2 hover:scale-110 transition-transform" aria-label="Toggle Navigation">
+                <i class="fa-solid fa-bars-staggered"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Menu Overlay -->
+        <div id="mobileMenu" class="fixed inset-0 bg-wood-50/98 backdrop-blur-2xl z-40 flex flex-col items-center justify-center gap-8 text-xl font-serif-tc font-bold hidden md:hidden">
+            <button id="closeMenuBtn" class="absolute top-6 right-6 text-3xl text-forest-800 p-2">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <a href="#home" class="mobile-link text-forest-900 hover:text-wood-600">首頁 Home</a>
+            <a href="#brand-story" class="mobile-link text-forest-900 hover:text-wood-600">品牌故事 Story</a>
+            <a href="#interactive-story" class="mobile-link text-wood-600">雙向互動故事 Interactive</a>
+            <a href="#philosophy" class="mobile-link text-forest-900 hover:text-wood-600">品牌理念 Philosophy</a>
+            <a href="#products" class="mobile-link text-forest-900 hover:text-wood-600">產品系列 Products</a>
+            <a href="#experience" class="mobile-link text-forest-900 hover:text-wood-600">五感體驗 Experience</a>
+            <a href="#contact" class="mobile-link text-forest-900 hover:text-wood-600">預約諮詢 Contact</a>
+        </div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section id="home" class="relative min-h-screen flex items-center pt-32 pb-20 px-6 md:px-12 overflow-hidden">
+        
+        <!-- Background Soft Glow Spheres -->
+        <div class="absolute top-1/4 -right-20 w-[450px] h-[450px] bg-wood-200/50 rounded-full blur-3xl -z-10 pointer-events-none"></div>
+        <div class="absolute bottom-10 -left-20 w-[400px] h-[400px] bg-forest-100/60 rounded-full blur-3xl -z-10 pointer-events-none"></div>
+
+        <div class="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+            
+            <!-- Left Text Hero Column -->
+            <div class="lg:col-span-7 space-y-8 z-10">
+                
+                <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-wood-100 border border-wood-300/80 text-forest-900 text-xs font-bold tracking-wider shadow-xs hover:bg-wood-200 transition-colors duration-300">
+                    <span class="w-2 h-2 rounded-full bg-forest-500 animate-pulse"></span>
+                    100% 天然實木・心靈療癒與放鬆提案
+                </div>
+
+                <!-- HERO HEADING: ORGANIC MASKED TEXT ENTRANCE -->
+                <div class="space-y-2">
+                    <h1 class="text-4xl sm:text-6xl lg:text-7xl font-serif-tc font-black text-forest-900 leading-[1.2] tracking-tight">
+                        <div class="reveal-mask">
+                            <span class="reveal-text-item hero-text-1 block">在家中，</span>
+                        </div>
+                        <div class="reveal-mask my-1">
+                            <span class="reveal-text-item hero-text-2 block text-wood-600 italic">沐浴大海與森林的</span>
+                        </div>
+                        <div class="reveal-mask">
+                            <span class="reveal-text-item hero-text-3 block text-forest-900">溫潤與平靜。</span>
+                        </div>
+                    </h1>
+                </div>
+
+                <!-- CORE BRAND SENTENCE BANNER -->
+                <div class="p-6 rounded-2xl bg-white/80 backdrop-blur-md border border-wood-200/90 shadow-sm max-w-xl hover:border-wood-400/60 transition-colors duration-500">
+                    <p class="text-base sm:text-lg text-forest-900 leading-relaxed font-serif-tc font-medium">
+                        「我們是一個家具品牌，透過原木材，讓人心情可以放鬆、沐浴在大自然中。」
+                    </p>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="flex flex-wrap items-center gap-4 pt-2">
+                    <a href="#products" data-cursor="VIEW" class="btn-progressive px-8 py-4 bg-forest-800 hover:bg-forest-900 text-wood-50 rounded-full font-bold text-sm shadow-md flex items-center gap-3 group">
+                        <span>探索溫潤家具作品</span>
+                        <i class="fa-solid fa-arrow-right text-xs group-hover:translate-x-2 transition-transform duration-300"></i>
+                    </a>
+                    <a href="#interactive-story" data-cursor="SLIDE" class="btn-progressive px-8 py-4 bg-white hover:bg-wood-100 text-forest-900 rounded-full font-bold text-sm border border-wood-300 flex items-center gap-2 group">
+                        <i class="fa-solid fa-sliders text-wood-600 group-hover:rotate-180 transition-transform duration-500"></i>
+                        <span>雙向體驗故事</span>
+                    </a>
+                </div>
+
+                <!-- Core Pillars Quick Stats -->
+                <div class="pt-6 border-t border-wood-200/80 grid grid-cols-3 gap-4 max-w-md text-xs text-forest-800">
+                    <div class="group cursor-default">
+                        <span class="block font-bold text-sm text-forest-900 group-hover:text-wood-600 transition-colors">100% 永續原木</span>
+                        <span class="text-wood-600">食品級植物油防護</span>
+                    </div>
+                    <div class="group cursor-default">
+                        <span class="block font-bold text-sm text-forest-900 group-hover:text-wood-600 transition-colors">心靈療癒</span>
+                        <span class="text-wood-600">森林芬多精與觸感</span>
+                    </div>
+                    <div class="group cursor-default">
+                        <span class="block font-bold text-sm text-forest-900 group-hover:text-wood-600 transition-colors">堅固耐用</span>
+                        <span class="text-wood-600">傳統榫卯世代傳承</span>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Right Showcase Visual Column -->
+            <div class="lg:col-span-5 relative">
+                <div class="img-progressive-wrap card-tilt relative z-10 rounded-3xl overflow-hidden shadow-2xl border-4 border-white group" data-cursor="LOOK">
+                    <img src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&q=80&w=1200" 
+                         alt="沐木 MORI WOOD 原木空間" 
+                         class="w-full h-[540px] object-cover"
+                         onerror="this.src='https://placehold.co/600x800/8c603f/ffffff?text=MORI+WOOD'">
+                    
+                    <div class="img-overlay-glow"></div>
+
+                    <div class="absolute inset-0 flex items-end p-8 z-10">
+                        <div class="text-white transform group-hover:-translate-y-2 transition-transform duration-500">
+                            <span class="text-xs uppercase font-bold tracking-widest text-wood-300 block mb-1">Featured Design</span>
+                            <h3 class="text-2xl font-serif-tc font-bold">息山系列・北美黑胡桃木懸浮床</h3>
+                            <p class="text-xs text-wood-200/90 mt-1">隱藏式支架與極致靜音榫卯工藝</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Floating Soft Accent Badge -->
+                <div class="absolute -bottom-6 -left-8 z-20 bg-wood-50/95 p-5 rounded-2xl border border-wood-300 shadow-xl hidden sm:flex items-center gap-4 max-w-xs backdrop-blur-md hover:scale-105 transition-transform duration-300">
+                    <div class="w-12 h-12 rounded-xl bg-forest-800 text-wood-100 flex items-center justify-center shrink-0 text-xl shadow-xs">
+                        <i class="fa-solid fa-tree animate-pulse"></i>
+                    </div>
+                    <div>
+                        <p class="text-xs font-bold text-forest-900">森林微孔呼吸</p>
+                        <p class="text-[11px] text-forest-700 leading-tight">手作打磨 保持木材會呼吸的微孔結構</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- BRAND STORY SECTION -->
+    <section id="brand-story" class="py-28 bg-wood-100/70 relative overflow-hidden">
+        
+        <!-- Watermark Floating Text (Movement Animation) -->
+        <div class="story-watermark absolute top-12 left-0 w-full whitespace-nowrap text-[120px] sm:text-[160px] font-serif-tc font-black text-wood-200/40 pointer-events-none select-none z-0">
+            SOUL HEALING MORI WOOD
+        </div>
+
+        <div class="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
+            
+            <div class="text-center max-w-3xl mx-auto mb-20 space-y-4">
+                <span class="text-xs font-bold tracking-widest uppercase text-wood-600 block">OUR BRAND STORY</span>
+                
+                <h2 class="text-3xl sm:text-5xl font-serif-tc font-black text-forest-900 leading-tight">
+                    <div class="reveal-mask">
+                        <span class="story-title-reveal block">重回森林，找回心中的寧靜</span>
+                    </div>
+                </h2>
+                <div class="w-12 h-1 bg-wood-500 mx-auto rounded-full mt-2"></div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                
+                <!-- Story Visual -->
+                <div class="space-y-6">
+                    <div class="img-progressive-wrap card-tilt rounded-3xl overflow-hidden shadow-xl border-4 border-white h-[400px] relative group" data-cursor="CRAFT">
+                        <img src="https://images.unsplash.com/photo-1540518614846-7ede433c5172?auto=format&fit=crop&q=80&w=1000" 
+                             alt="原木工藝與木紋" 
+                             class="w-full h-full object-cover"
+                             onerror="this.src='https://placehold.co/600x400/583a2c/ffffff?text=Craftsmanship'">
+                        <div class="img-overlay-glow"></div>
+                    </div>
+                </div>
+
+                <!-- Story Narrative -->
+                <div class="space-y-6 text-forest-800 font-serif-tc leading-relaxed">
+                    <p class="text-xl font-bold text-forest-900 border-l-4 border-wood-500 pl-4 py-1 hover:border-forest-800 transition-colors duration-300">
+                        都市喧囂常讓心靈緊繃，而大自然，始終是我們最溫柔的解答。
+                    </p>
+                    <p class="text-base text-forest-800/90">
+                        「沐木 MORI WOOD」創立於對天然原木的深刻熱愛。我們深信，家具不只是室內擺設，更是每天與你肌膚相親、共度生活的溫暖陪伴者。
+                    </p>
+                    <p class="text-base text-forest-800/90">
+                        每一塊嚴選的原木，都記錄著數十年乃至上百年的歲月年輪。我們保留木材最原始的溫潤紋理與自然香氣，將來自森林的撫慰力量帶入都市居所。踩進家門的那一刻，彷彿踱步於晨霧繚繞的靜謐森林。
+                    </p>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <!-- BIDIRECTIONAL INTERACTIVE BRAND STORY SECTION -->
+    <section id="interactive-story" class="py-28 px-6 md:px-12 max-w-7xl mx-auto">
+        
+        <div class="bg-white rounded-3xl border border-wood-200/90 p-8 sm:p-12 shadow-xl space-y-12">
+            
+            <!-- Section Header -->
+            <div class="text-center max-w-3xl mx-auto space-y-4">
+                <span class="inline-block px-3.5 py-1 rounded-full bg-forest-50 text-forest-800 text-xs font-bold tracking-wider border border-forest-100">
+                    <i class="fa-solid fa-arrows-left-right text-wood-600 mr-1.5"></i>雙向互動體驗
+                </span>
+                <h2 class="text-3xl sm:text-4xl font-serif-tc font-black text-forest-900">
+                    切換生活情境：體驗「沐木」為家帶來的轉變
+                </h2>
+                <p class="text-sm text-forest-700 font-medium">
+                    拖動下方滑桿，感受從都市緊繃步調切換至森林放鬆原木空間的心靈變化
+                </p>
+            </div>
+
+            <!-- INTERACTIVE SLIDER 1: URBAN CHAOS VS FOREST SANCTUARY -->
+            <div id="moodContainer" class="mood-transition rounded-2xl p-8 border border-wood-200 bg-wood-50 relative overflow-hidden">
+                
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                    
+                    <!-- Left: Interactive Visual Preview -->
+                    <div class="lg:col-span-6 relative">
+                        <div class="img-progressive-wrap rounded-2xl overflow-hidden shadow-lg border-2 border-white h-80">
+                            <img id="moodImage" src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&q=80&w=800" 
+                                 class="w-full h-full object-cover">
+                            <div id="moodBadge" class="absolute top-4 left-4 bg-forest-900/85 text-wood-100 text-xs font-bold px-4 py-1.5 rounded-full backdrop-blur-md">
+                                🌲 森林沉浸狀態 (100% 沐木狀態)
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right: Story Narrative & Slider Controls -->
+                    <div class="lg:col-span-6 space-y-6">
+                        <div>
+                            <span id="moodSub" class="text-xs font-bold tracking-wider uppercase text-wood-600 block mb-1">STATE: FOREST OASIS</span>
+                            <h3 id="moodTitle" class="text-2xl font-serif-tc font-bold text-forest-900">心靈放鬆 ‧ 森林呼吸居所</h3>
+                            <p id="moodDesc" class="text-sm text-forest-800 leading-relaxed mt-3 font-serif-tc">
+                                觸摸溫潤手感的原木邊角，空氣中瀰漫著微微檜木與胡桃木芬多精。身心自然沉靜下來，都市的焦慮在此被全然洗滌。
+                            </p>
+                        </div>
+
+                        <!-- Mood Interactive Slider Bar -->
+                        <div class="space-y-3 pt-4 border-t border-wood-200">
+                            <div class="flex justify-between items-center text-xs font-bold text-forest-900">
+                                <span>🏙️ 都市緊繃 State</span>
+                                <span>🌲 森林療癒 State</span>
+                            </div>
+                            <input type="range" id="moodSlider" min="0" max="100" value="100" 
+                                   class="w-full h-2 bg-wood-200 rounded-lg appearance-none cursor-pointer accent-forest-800 hover:scale-y-125 transition-transform"
+                                   oninput="updateMoodState(this.value)">
+                        </div>
+
+                        <!-- Sensory Indicators -->
+                        <div class="grid grid-cols-3 gap-3 pt-2 text-center text-xs font-bold">
+                            <div class="p-3 rounded-xl bg-white/70 border border-wood-200 hover:scale-105 transition-transform duration-300">
+                                <span class="block text-wood-600 text-[10px]">心靈放鬆度</span>
+                                <span id="statRelax" class="text-forest-900 font-black text-lg">98%</span>
+                            </div>
+                            <div class="p-3 rounded-xl bg-white/70 border border-wood-200 hover:scale-105 transition-transform duration-300">
+                                <span class="block text-wood-600 text-[10px]">觸覺溫潤感</span>
+                                <span id="statTactile" class="text-forest-900 font-black text-lg">100%</span>
+                            </div>
+                            <div class="p-3 rounded-xl bg-white/70 border border-wood-200 hover:scale-105 transition-transform duration-300">
+                                <span class="block text-wood-600 text-[10px]">空間耐用度</span>
+                                <span id="statDurable" class="text-forest-900 font-black text-lg">萬代傳承</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- INTERACTIVE STORY STEPPER: LIFECYCLE OF WOOD -->
+            <div class="space-y-6">
+                <div class="text-center max-w-xl mx-auto space-y-2">
+                    <h3 class="text-xl font-serif-tc font-bold text-forest-900">探索一塊原木的雙向生命旅程</h3>
+                    <p class="text-xs text-forest-700">點擊下方步驟，了解我們如何將大自然的撫慰帶入您的生活</p>
+                </div>
+
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <button onclick="selectStoryStep(1)" id="stepBtn-1" class="story-step-btn btn-progressive active p-5 rounded-2xl border-2 border-forest-800 bg-forest-800 text-wood-50 text-left shadow-sm">
+                        <span class="text-[10px] font-bold block opacity-75">STEP 01</span>
+                        <span class="font-serif-tc font-bold text-base block mt-1">01. 永續林場</span>
+                        <span class="text-[11px] block mt-1 opacity-90">嚴選 FSC 認證永續原木</span>
+                    </button>
+
+                    <button onclick="selectStoryStep(2)" id="stepBtn-2" class="story-step-btn btn-progressive p-5 rounded-2xl border-2 border-wood-200 bg-white text-forest-900 text-left hover:border-wood-300 shadow-sm">
+                        <span class="text-[10px] text-wood-600 font-bold block">STEP 02</span>
+                        <span class="font-serif-tc font-bold text-base block mt-1">02. 匠人榫卯</span>
+                        <span class="text-[11px] text-forest-700 block mt-1">30年經驗手作無釘對接</span>
+                    </button>
+
+                    <button onclick="selectStoryStep(3)" id="stepBtn-3" class="story-step-btn btn-progressive p-5 rounded-2xl border-2 border-wood-200 bg-white text-forest-900 text-left hover:border-wood-300 shadow-sm">
+                        <span class="text-[10px] text-wood-600 font-bold block">STEP 03</span>
+                        <span class="font-serif-tc font-bold text-base block mt-1">03. 植物塗油</span>
+                        <span class="text-[11px] text-forest-700 block mt-1">保留木材微孔自然呼吸</span>
+                    </button>
+
+                    <button onclick="selectStoryStep(4)" id="stepBtn-4" class="story-step-btn btn-progressive p-5 rounded-2xl border-2 border-wood-200 bg-white text-forest-900 text-left hover:border-wood-300 shadow-sm">
+                        <span class="text-[10px] text-wood-600 font-bold block">STEP 04</span>
+                        <span class="font-serif-tc font-bold text-base block mt-1">04. 走進居家</span>
+                        <span class="text-[11px] text-forest-700 block mt-1">陪伴數十年的放鬆時光</span>
+                    </button>
+                </div>
+
+                <!-- Story Dynamic Card Box -->
+                <div id="stepCard" class="p-8 rounded-2xl bg-wood-50 border border-wood-200 grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
+                    <div class="md:col-span-5 img-progressive-wrap rounded-xl overflow-hidden shadow-md">
+                        <img id="stepImg" src="https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&q=80&w=800" 
+                             class="w-full h-56 object-cover border border-white">
+                    </div>
+                    <div class="md:col-span-7 space-y-3 font-serif-tc">
+                        <span id="stepTag" class="text-xs font-bold text-wood-600 uppercase tracking-wider block">FSC CERTIFIED FOREST</span>
+                        <h4 id="stepTitle" class="text-2xl font-bold text-forest-900">來自永續森林的溫暖恩賜</h4>
+                        <p id="stepText" class="text-sm text-forest-800 leading-relaxed">
+                            我們僅選用經過永續管理認證的百年成材原木。每砍伐一棵樹，便在林場補種兩棵新苗，讓自然的循環生生不息，同時為家具注入最純粹大自然氣息。
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- BRAND PHILOSOPHY SECTION -->
+    <section id="philosophy" class="py-28 px-6 md:px-12 max-w-7xl mx-auto relative">
+        
+        <!-- Section Title with Soft Text Scale Scroll Effect -->
+        <div class="text-center max-w-3xl mx-auto mb-20 space-y-6">
+            <span class="text-xs font-bold tracking-widest uppercase text-wood-600 block">BRAND PHILOSOPHY</span>
+            
+            <h2 class="text-3xl sm:text-5xl font-serif-tc font-black text-forest-900">
+                品牌的核心承諾
+            </h2>
+            
+            <!-- SCROLL-DRIVEN DYNAMIC TEXT SCALE & AMBIENT FOCUS -->
+            <div class="philosophy-scale-wrap py-6 overflow-hidden">
+                <p id="philosophyScaleText" class="text-xl sm:text-3xl font-serif-tc font-bold text-wood-700 text-glow-soft transition-transform">
+                    「以原木療癒心靈，以堅固品質相伴終生」
+                </p>
+            </div>
+            <p class="text-sm text-forest-700">我們堅持的兩大核心價值：深刻的心靈放鬆與經得起時間考驗的極致耐用</p>
+        </div>
+
+        <!-- 4 Key Value Pillars Cards -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+            
+            <!-- Pillar 1: 心靈療癒 -->
+            <div class="card-tilt p-8 rounded-3xl bg-white border border-wood-200 shadow-xs hover:-translate-y-2 group" data-cursor="SOUL">
+                <div class="w-14 h-14 rounded-2xl bg-forest-50 text-forest-800 flex items-center justify-center text-2xl mb-6 group-hover:bg-forest-800 group-hover:text-wood-100 group-hover:scale-110 transition-all duration-300">
+                    <i class="fa-solid fa-heart-pulse"></i>
+                </div>
+                <h3 class="text-2xl font-serif-tc font-bold text-forest-900 mb-3 group-hover:text-wood-600 transition-colors">心靈療癒</h3>
+                <p class="text-sm text-forest-700 leading-relaxed">
+                    觸碰天然木質的細膩紋理，聞吸散發的淡雅木香，有效舒緩神經壓力，為家注入沉靜如森林的放鬆氣氛。
+                </p>
+            </div>
+
+            <!-- Pillar 2: 堅固耐用 -->
+            <div class="card-tilt p-8 rounded-3xl bg-white border border-wood-200 shadow-xs hover:-translate-y-2 group" data-cursor="QUALITY">
+                <div class="w-14 h-14 rounded-2xl bg-forest-50 text-forest-800 flex items-center justify-center text-2xl mb-6 group-hover:bg-forest-800 group-hover:text-wood-100 group-hover:scale-110 transition-all duration-300">
+                    <i class="fa-solid fa-shield-halved"></i>
+                </div>
+                <h3 class="text-2xl font-serif-tc font-bold text-forest-900 mb-3 group-hover:text-wood-600 transition-colors">極致耐用</h3>
+                <p class="text-sm text-forest-700 leading-relaxed">
+                    堅持傳統榫卯結構與高密度實木，拒絕劣質合板與化學貼皮，耐重抗變形，陪伴家人度過數十年美好光陰。
+                </p>
+            </div>
+
+            <!-- Pillar 3: 無毒天然 -->
+            <div class="card-tilt p-8 rounded-3xl bg-white border border-wood-200 shadow-xs hover:-translate-y-2 group" data-cursor="NATURAL">
+                <div class="w-14 h-14 rounded-2xl bg-forest-50 text-forest-800 flex items-center justify-center text-2xl mb-6 group-hover:bg-forest-800 group-hover:text-wood-100 group-hover:scale-110 transition-all duration-300">
+                    <i class="fa-solid fa-leaf"></i>
+                </div>
+                <h3 class="text-2xl font-serif-tc font-bold text-forest-900 mb-3 group-hover:text-wood-600 transition-colors">無毒天然</h3>
+                <p class="text-sm text-forest-700 leading-relaxed">
+                    嚴選德國食品級植物塗油打磨，保留木材天然微孔呼吸，零甲醛危害，讓全家人放心安睡與肌膚接觸。
+                </p>
+            </div>
+
+            <!-- Pillar 4: 人體工學 -->
+            <div class="card-tilt p-8 rounded-3xl bg-white border border-wood-200 shadow-xs hover:-translate-y-2 group" data-cursor="DESIGN">
+                <div class="w-14 h-14 rounded-2xl bg-forest-50 text-forest-800 flex items-center justify-center text-2xl mb-6 group-hover:bg-forest-800 group-hover:text-wood-100 group-hover:scale-110 transition-all duration-300">
+                    <i class="fa-solid fa-couch"></i>
+                </div>
+                <h3 class="text-2xl font-serif-tc font-bold text-forest-900 mb-3 group-hover:text-wood-600 transition-colors">人體工學</h3>
+                <p class="text-sm text-forest-700 leading-relaxed">
+                    以日式極簡與北歐線條相結合，將人體工學曲線揉入木作，兼具機能收納與極佳視覺通透美感。
+                </p>
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- PRODUCTS SECTION -->
+    <section id="products" class="py-28 bg-wood-100/50 relative">
+        <div class="max-w-7xl mx-auto px-6 md:px-12">
+            
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+                <div>
+                    <span class="text-xs font-bold tracking-widest uppercase text-wood-600 block mb-2">COLLECTION</span>
+                    <h2 class="text-3xl sm:text-5xl font-serif-tc font-black text-forest-900">
+                        <div class="reveal-mask">
+                            <span class="product-title-reveal block">精選原木家具系列</span>
+                        </div>
+                    </h2>
+                    <p class="text-sm text-forest-700 mt-2 font-medium">包含書櫃、桌子、椅子、床組等等，為全家注入森林撫慰</p>
+                </div>
+
+                <!-- Product Filter Controls -->
+                <div class="flex items-center gap-2 overflow-x-auto pb-2 no-scrollbar">
+                    <button class="filter-btn btn-progressive active px-6 py-2.5 rounded-full text-xs font-bold tracking-wide transition-all bg-forest-800 text-wood-50 shadow-xs" data-filter="all">
+                        全部作品
+                    </button>
+                    <button class="filter-btn btn-progressive px-6 py-2.5 rounded-full text-xs font-bold tracking-wide transition-all bg-white text-forest-800 hover:bg-wood-200 border border-wood-200" data-filter="bookcase">
+                        書櫃 Bookshelf
+                    </button>
+                    <button class="filter-btn btn-progressive px-6 py-2.5 rounded-full text-xs font-bold tracking-wide transition-all bg-white text-forest-800 hover:bg-wood-200 border border-wood-200" data-filter="table">
+                        桌子 Table
+                    </button>
+                    <button class="filter-btn btn-progressive px-6 py-2.5 rounded-full text-xs font-bold tracking-wide transition-all bg-white text-forest-800 hover:bg-wood-200 border border-wood-200" data-filter="chair">
+                        椅子 Chair
+                    </button>
+                    <button class="filter-btn btn-progressive px-6 py-2.5 rounded-full text-xs font-bold tracking-wide transition-all bg-white text-forest-800 hover:bg-wood-200 border border-wood-200" data-filter="bed">
+                        床組 Bed
+                    </button>
+                </div>
+            </div>
+
+            <!-- Product Cards Grid -->
+            <div id="productGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                
+                <!-- Item 1: 書櫃 -->
+                <div class="product-card card-tilt bg-white rounded-3xl overflow-hidden border border-wood-200/90 shadow-xs flex flex-col group" data-category="bookcase" data-cursor="DETAIL">
+                    <div class="img-progressive-wrap aspect-[4/3]">
+                        <img src="https://images.unsplash.com/photo-1594620302200-9a762244a156?auto=format&fit=crop&q=80&w=800" 
+                             alt="溫潤紅橡木六格書櫃" 
+                             class="w-full h-full object-cover"
+                             onerror="this.src='https://placehold.co/600x450/be9977/ffffff?text=Bookshelf'">
+                        <div class="img-overlay-glow"></div>
+                        <span class="absolute top-4 left-4 z-10 bg-forest-900/85 text-wood-100 text-[11px] font-bold px-3.5 py-1.5 rounded-full backdrop-blur-md">
+                            純實木榫卯
+                        </span>
+                    </div>
+                    <div class="p-6 flex-1 flex flex-col justify-between space-y-4">
+                        <div>
+                            <span class="text-xs text-wood-600 font-bold uppercase tracking-wider">書櫃系列</span>
+                            <h3 class="text-xl font-serif-tc font-bold text-forest-900 mt-1 group-hover:text-wood-600 transition-colors">【森韻】北美紅橡木六格書櫃</h3>
+                            <p class="text-xs text-forest-700 mt-2 line-clamp-2">沉穩大氣的木紋線條，為珍藏的書籍與藝品提供最安心的依靠。</p>
+                        </div>
+                        <div class="pt-4 border-t border-wood-100 flex items-center justify-between">
+                            <div>
+                                <span class="text-[11px] text-forest-700 block font-medium">建議售價</span>
+                                <span class="font-black text-forest-900 text-xl font-sans">NT$ 28,800</span>
+                            </div>
+                            <button onclick="openProductModal('【森韻】北美紅橡木六格書櫃', '書櫃系列', 'NT$ 28,800', '採用100%北美進口特級紅橡木，全榫卯結構，無金屬裸露。天然植物油打磨，帶來如絲綢般平滑觸感。', 'https://images.unsplash.com/photo-1594620302200-9a762244a156?auto=format&fit=crop&q=80&w=800')" 
+                                    class="w-10 h-10 rounded-full bg-wood-100 text-forest-800 flex items-center justify-center hover:bg-forest-800 hover:text-white hover:rotate-90 transition-all duration-300">
+                                <i class="fa-solid fa-plus text-xs"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Item 2: 桌子 -->
+                <div class="product-card card-tilt bg-white rounded-3xl overflow-hidden border border-wood-200/90 shadow-xs flex flex-col group" data-category="table" data-cursor="DETAIL">
+                    <div class="img-progressive-wrap aspect-[4/3]">
+                        <img src="https://images.unsplash.com/photo-1615066390971-03e4e1c36ddf?auto=format&fit=crop&q=80&w=800" 
+                             alt="極簡梣木實木餐桌" 
+                             class="w-full h-full object-cover"
+                             onerror="this.src='https://placehold.co/600x450/a77c57/ffffff?text=Table'">
+                        <div class="img-overlay-glow"></div>
+                        <span class="absolute top-4 left-4 z-10 bg-forest-900/85 text-wood-100 text-[11px] font-bold px-3.5 py-1.5 rounded-full backdrop-blur-md">
+                            熱銷經典
+                        </span>
+                    </div>
+                    <div class="p-6 flex-1 flex flex-col justify-between space-y-4">
+                        <div>
+                            <span class="text-xs text-wood-600 font-bold uppercase tracking-wider">桌子系列</span>
+                            <h3 class="text-xl font-serif-tc font-bold text-forest-900 mt-1 group-hover:text-wood-600 transition-colors">【沐晨】極簡白梣木圓角餐桌</h3>
+                            <p class="text-xs text-forest-700 mt-2 line-clamp-2">柔和圓弧桌角安全防撞，細膩梣木山形紋，匯聚全家用餐療癒時光。</p>
+                        </div>
+                        <div class="pt-4 border-t border-wood-100 flex items-center justify-between">
+                            <div>
+                                <span class="text-[11px] text-forest-700 block font-medium">建議售價</span>
+                                <span class="font-black text-forest-900 text-xl font-sans">NT$ 34,500</span>
+                            </div>
+                            <button onclick="openProductModal('【沐晨】極簡白梣木圓角餐桌', '桌子系列', 'NT$ 34,500', '天然白梣木打造，獨特山形紋理。桌角經過數百次手作打磨成防碰撞圓弧，耐重可達300kg。', 'https://images.unsplash.com/photo-1615066390971-03e4e1c36ddf?auto=format&fit=crop&q=80&w=800')" 
+                                    class="w-10 h-10 rounded-full bg-wood-100 text-forest-800 flex items-center justify-center hover:bg-forest-800 hover:text-white hover:rotate-90 transition-all duration-300">
+                                <i class="fa-solid fa-plus text-xs"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Item 3: 椅子 -->
+                <div class="product-card card-tilt bg-white rounded-3xl overflow-hidden border border-wood-200/90 shadow-xs flex flex-col group" data-category="chair" data-cursor="DETAIL">
+                    <div class="img-progressive-wrap aspect-[4/3]">
+                        <img src="https://images.unsplash.com/photo-1580481072645-022f9a6d83d0?auto=format&fit=crop&q=80&w=800" 
+                             alt="人體工學曲木單椅" 
+                             class="w-full h-full object-cover"
+                             onerror="this.src='https://placehold.co/600x450/8c603f/ffffff?text=Chair'">
+                        <div class="img-overlay-glow"></div>
+                        <span class="absolute top-4 left-4 z-10 bg-forest-900/85 text-wood-100 text-[11px] font-bold px-3.5 py-1.5 rounded-full backdrop-blur-md">
+                            心靈放鬆必備
+                        </span>
+                    </div>
+                    <div class="p-6 flex-1 flex flex-col justify-between space-y-4">
+                        <div>
+                            <span class="text-xs text-wood-600 font-bold uppercase tracking-wider">椅子系列</span>
+                            <h3 class="text-xl font-serif-tc font-bold text-forest-900 mt-1 group-hover:text-wood-600 transition-colors">【靜心】人體工學曲木主人椅</h3>
+                            <p class="text-xs text-forest-700 mt-2 line-clamp-2">符合人體脊椎曲度的自然弧線，讓坐下的每一秒都是一場深度休息。</p>
+                        </div>
+                        <div class="pt-4 border-t border-wood-100 flex items-center justify-between">
+                            <div>
+                                <span class="text-[11px] text-forest-700 block font-medium">建議售價</span>
+                                <span class="font-black text-forest-900 text-xl font-sans">NT$ 16,800</span>
+                            </div>
+                            <button onclick="openProductModal('【靜心】人體工學曲木主人椅', '椅子系列', 'NT$ 16,800', '結合微曲木熱壓工藝與實木腳座，完美支撐腰椎壓力。無論閱讀或品茗，都能體驗被森林包裹的安心感。', 'https://images.unsplash.com/photo-1580481072645-022f9a6d83d0?auto=format&fit=crop&q=80&w=800')" 
+                                    class="w-10 h-10 rounded-full bg-wood-100 text-forest-800 flex items-center justify-center hover:bg-forest-800 hover:text-white hover:rotate-90 transition-all duration-300">
+                                <i class="fa-solid fa-plus text-xs"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Item 4: 床組 -->
+                <div class="product-card card-tilt bg-white rounded-3xl overflow-hidden border border-wood-200/90 shadow-xs flex flex-col group" data-category="bed" data-cursor="DETAIL">
+                    <div class="img-progressive-wrap aspect-[4/3]">
+                        <img src="https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&q=80&w=800" 
+                             alt="黑胡桃木懸浮雙人床" 
+                             class="w-full h-full object-cover"
+                             onerror="this.src='https://placehold.co/600x450/3c2820/ffffff?text=Bed'">
+                        <div class="img-overlay-glow"></div>
+                        <span class="absolute top-4 left-4 z-10 bg-forest-900/85 text-wood-100 text-[11px] font-bold px-3.5 py-1.5 rounded-full backdrop-blur-md">
+                            高質感旗艦
+                        </span>
+                    </div>
+                    <div class="p-6 flex-1 flex flex-col justify-between space-y-4">
+                        <div>
+                            <span class="text-xs text-wood-600 font-bold uppercase tracking-wider">床組系列</span>
+                            <h3 class="text-xl font-serif-tc font-bold text-forest-900 mt-1 group-hover:text-wood-600 transition-colors">【息山】北美黑胡桃木懸浮床</h3>
+                            <p class="text-xs text-forest-700 mt-2 line-clamp-2">內縮式床腳視覺輕盈懸浮，天然黑胡桃木油脂光澤，給您最舒心的睡眠環境。</p>
+                        </div>
+                        <div class="pt-4 border-t border-wood-100 flex items-center justify-between">
+                            <div>
+                                <span class="text-[11px] text-forest-700 block font-medium">建議售價</span>
+                                <span class="font-black text-forest-900 text-xl font-sans">NT$ 52,000</span>
+                            </div>
+                            <button onclick="openProductModal('【息山】北美黑胡桃木懸浮床', '床組系列', 'NT$ 52,000', '採用特級北美黑胡桃木，沉穩高雅的深色木質，內建隱藏式床底排骨架與感應夜燈溝槽，打造極致沉靜的睡眠庇護所。', 'https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&q=80&w=800')" 
+                                    class="w-10 h-10 rounded-full bg-wood-100 text-forest-800 flex items-center justify-center hover:bg-forest-800 hover:text-white hover:rotate-90 transition-all duration-300">
+                                <i class="fa-solid fa-plus text-xs"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Item 5: 收納櫃 -->
+                <div class="product-card card-tilt bg-white rounded-3xl overflow-hidden border border-wood-200/90 shadow-xs flex flex-col group" data-category="bookcase" data-cursor="DETAIL">
+                    <div class="img-progressive-wrap aspect-[4/3]">
+                        <img src="https://images.unsplash.com/photo-1595428774223-ef52624120d2?auto=format&fit=crop&q=80&w=800" 
+                             alt="日式實木邊櫃" 
+                             class="w-full h-full object-cover"
+                             onerror="this.src='https://placehold.co/600x450/be9977/ffffff?text=Cabinet'">
+                        <div class="img-overlay-glow"></div>
+                    </div>
+                    <div class="p-6 flex-1 flex flex-col justify-between space-y-4">
+                        <div>
+                            <span class="text-xs text-wood-600 font-bold uppercase tracking-wider">書櫃與收納</span>
+                            <h3 class="text-xl font-serif-tc font-bold text-forest-900 mt-1 group-hover:text-wood-600 transition-colors">【語木】籐編實木多功能收納立櫃</h3>
+                            <p class="text-xs text-forest-700 mt-2 line-clamp-2">天然籐編門板透氣防潮，與櫻桃木相映成趣，收納生活雜物與心靈平靜。</p>
+                        </div>
+                        <div class="pt-4 border-t border-wood-100 flex items-center justify-between">
+                            <div>
+                                <span class="text-[11px] text-forest-700 block font-medium">建議售價</span>
+                                <span class="font-black text-forest-900 text-xl font-sans">NT$ 22,600</span>
+                            </div>
+                            <button onclick="openProductModal('【語木】籐編實木多功能收納立櫃', '書櫃與收納', 'NT$ 22,600', '嚴選北美櫻桃木搭配印尼天然八角籐編，兼具透氣性與溫潤古樸感。內部配有可調式實木隔板。', 'https://images.unsplash.com/photo-1595428774223-ef52624120d2?auto=format&fit=crop&q=80&w=800')" 
+                                    class="w-10 h-10 rounded-full bg-wood-100 text-forest-800 flex items-center justify-center hover:bg-forest-800 hover:text-white hover:rotate-90 transition-all duration-300">
+                                <i class="fa-solid fa-plus text-xs"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Item 6: 茶幾 -->
+                <div class="product-card card-tilt bg-white rounded-3xl overflow-hidden border border-wood-200/90 shadow-xs flex flex-col group" data-category="table" data-cursor="DETAIL">
+                    <div class="img-progressive-wrap aspect-[4/3]">
+                        <img src="https://images.unsplash.com/photo-1533090161767-e6ffed986c88?auto=format&fit=crop&q=80&w=800" 
+                             alt="日式原木茶幾" 
+                             class="w-full h-full object-cover"
+                             onerror="this.src='https://placehold.co/600x450/d5ba9f/ffffff?text=Coffee+Table'">
+                        <div class="img-overlay-glow"></div>
+                    </div>
+                    <div class="p-6 flex-1 flex flex-col justify-between space-y-4">
+                        <div>
+                            <span class="text-xs text-wood-600 font-bold uppercase tracking-wider">桌子系列</span>
+                            <h3 class="text-xl font-serif-tc font-bold text-forest-900 mt-1 group-hover:text-wood-600 transition-colors">【晨曦】日式和風原木低矮茶幾</h3>
+                            <p class="text-xs text-forest-700 mt-2 line-clamp-2">低重心親地設計，打造無壓力的客廳對話中心，呈現簡約自然風範。</p>
+                        </div>
+                        <div class="pt-4 border-t border-wood-100 flex items-center justify-between">
+                            <div>
+                                <span class="text-[11px] text-forest-700 block font-medium">建議售價</span>
+                                <span class="font-black text-forest-900 text-xl font-sans">NT$ 13,200</span>
+                            </div>
+                            <button onclick="openProductModal('【晨曦】日式和風原木低矮茶幾', '桌子系列', 'NT$ 13,200', '採用白橡木全實木拼板，厚實穩重。表面施以奧斯威油蠟防護，隨時間推移將展現愈發醇厚的木質光澤。', 'https://images.unsplash.com/photo-1533090161767-e6ffed986c88?auto=format&fit=crop&q=80&w=800')" 
+                                    class="w-10 h-10 rounded-full bg-wood-100 text-forest-800 flex items-center justify-center hover:bg-forest-800 hover:text-white hover:rotate-90 transition-all duration-300">
+                                <i class="fa-solid fa-plus text-xs"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <!-- BRAND EXPERIENCE SECTION -->
+    <section id="experience" class="py-28 bg-forest-900 text-wood-100 relative overflow-hidden">
+        
+        <div class="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
+            
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                
+                <div class="lg:col-span-6 space-y-8">
+                    <span class="text-xs font-bold tracking-widest uppercase text-wood-300 block">BRAND EXPERIENCE</span>
+                    
+                    <h2 class="text-3xl sm:text-5xl font-serif-tc font-black leading-tight text-white">
+                        <div class="reveal-mask">
+                            <span class="exp-title-reveal block">沐木・五感森林體驗會館</span>
+                        </div>
+                    </h2>
+                    
+                    <p class="text-wood-200/90 leading-relaxed font-serif-tc text-base sm:text-lg">
+                        原木家具不能只用眼睛看，更要用肌膚與呼吸去深度感知。我們打造了沉浸式原木體驗空間，邀請您親臨現場，開啟一場尋找心靈定所的五感療癒之旅。
+                    </p>
+
+                    <div class="space-y-6 pt-2">
+                        <div class="flex items-start gap-5 group cursor-default">
+                            <div class="w-12 h-12 rounded-2xl bg-wood-800/90 text-wood-200 flex items-center justify-center text-xl shrink-0 border border-wood-700 group-hover:bg-wood-200 group-hover:text-forest-900 transition-colors duration-300">
+                                <i class="fa-solid fa-wind"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-wood-100 text-lg font-serif-tc group-hover:text-wood-300 transition-colors">嗅覺｜天然森林香氣</h4>
+                                <p class="text-xs text-wood-300 mt-1 leading-relaxed">未經過度化學漆封的原木，散發天然檜木、黑胡桃木淡雅芬多精。</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start gap-5 group cursor-default">
+                            <div class="w-12 h-12 rounded-2xl bg-wood-800/90 text-wood-200 flex items-center justify-center text-xl shrink-0 border border-wood-700 group-hover:bg-wood-200 group-hover:text-forest-900 transition-colors duration-300">
+                                <i class="fa-solid fa-hand-holding-heart"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-wood-100 text-lg font-serif-tc group-hover:text-wood-300 transition-colors">觸覺｜溫潤細膩的木肌感受</h4>
+                                <p class="text-xs text-wood-300 mt-1 leading-relaxed">親手撫摸不同年輪紋理與手作打磨質感，感受來自森林的大自然體溫。</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start gap-5 group cursor-default">
+                            <div class="w-12 h-12 rounded-2xl bg-wood-800/90 text-wood-200 flex items-center justify-center text-xl shrink-0 border border-wood-700 group-hover:bg-wood-200 group-hover:text-forest-900 transition-colors duration-300">
+                                <i class="fa-solid fa-mug-hot"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-wood-100 text-lg font-serif-tc group-hover:text-wood-300 transition-colors">心靈｜一對一專業顧問諮詢</h4>
+                                <p class="text-xs text-wood-300 mt-1 leading-relaxed">享用特調手沖咖啡，由軟裝設計師為您量身規劃專屬放鬆空間。</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="pt-4">
+                        <a href="#contact" data-cursor="VISIT" class="btn-progressive inline-flex items-center gap-3 px-8 py-4 bg-wood-300 text-forest-900 rounded-full font-bold shadow-xl">
+                            <span>預約尊榮門市體驗</span>
+                            <i class="fa-solid fa-calendar-check text-sm"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-6">
+                    <div class="img-progressive-wrap card-tilt relative rounded-3xl overflow-hidden shadow-2xl border-2 border-wood-700/60 group" data-cursor="SHOWROOM">
+                        <img src="https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&q=80&w=1000" 
+                             alt="體驗館空間" 
+                             class="w-full h-[500px] object-cover"
+                             onerror="this.src='https://placehold.co/600x800/3c2820/ffffff?text=Showroom+Experience'">
+                        
+                        <div class="img-overlay-glow"></div>
+
+                        <div class="absolute inset-0 flex items-center justify-center p-8 text-center z-10">
+                            <div class="p-8 rounded-3xl bg-forest-900/85 backdrop-blur-md border border-wood-500/30 max-w-md shadow-2xl transform group-hover:scale-105 transition-transform duration-500">
+                                <i class="fa-solid fa-quote-left text-wood-400 text-3xl mb-3 block"></i>
+                                <p class="font-serif-tc text-base text-wood-100 italic leading-relaxed">
+                                    「走進沐木門市的那一刻，急促的都市步調不自主地慢了下來，我找到了家該有的溫度與寧靜。」
+                                </p>
+                                <span class="block text-xs text-wood-300 mt-4 tracking-wider font-bold">— 台北 許小姐 訪客親身心得</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <!-- CONTACT SECTION -->
+    <section id="contact" class="py-28 px-6 md:px-12 max-w-7xl mx-auto">
+        <div class="bg-wood-100 rounded-3xl border border-wood-300/80 p-8 sm:p-12 lg:p-16 shadow-xl relative overflow-hidden">
+            
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 relative z-10">
+                
+                <!-- Contact Info Column -->
+                <div class="lg:col-span-5 space-y-6">
+                    <span class="text-xs font-bold tracking-widest uppercase text-wood-600 block">GET IN TOUCH</span>
+                    
+                    <h2 class="text-3xl sm:text-4xl font-serif-tc font-black text-forest-900">
+                        開啟您的森林原木生活
+                    </h2>
+                    
+                    <p class="text-sm text-forest-800 leading-relaxed font-serif-tc font-medium">
+                        無論是預約體驗館參觀、洽詢尺寸訂製，或是家具選擇建議，我們的專業軟裝團隊隨時準備為您服務。
+                    </p>
+
+                    <div class="space-y-4 pt-4 text-sm text-forest-900 font-semibold">
+                        <div class="flex items-center gap-4 group">
+                            <div class="w-10 h-10 rounded-xl bg-wood-200/80 text-forest-800 flex items-center justify-center shadow-xs group-hover:bg-forest-800 group-hover:text-wood-50 transition-colors">
+                                <i class="fa-solid fa-location-dot"></i>
+                            </div>
+                            <span>台北市大安區森林大道 168 號 1 樓</span>
+                        </div>
+                        <div class="flex items-center gap-4 group">
+                            <div class="w-10 h-10 rounded-xl bg-wood-200/80 text-forest-800 flex items-center justify-center shadow-xs group-hover:bg-forest-800 group-hover:text-wood-50 transition-colors">
+                                <i class="fa-solid fa-phone"></i>
+                            </div>
+                            <span>02-2789-0123（週二至週日 10:00 - 19:00）</span>
+                        </div>
+                        <div class="flex items-center gap-4 group">
+                            <div class="w-10 h-10 rounded-xl bg-wood-200/80 text-forest-800 flex items-center justify-center shadow-xs group-hover:bg-forest-800 group-hover:text-wood-50 transition-colors">
+                                <i class="fa-solid fa-envelope"></i>
+                            </div>
+                            <span>service@moriwood.com</span>
+                        </div>
+                    </div>
+
+                    <!-- Social Icons -->
+                    <div class="pt-6 flex items-center gap-3">
+                        <a href="#" class="w-11 h-11 rounded-full bg-white text-forest-800 flex items-center justify-center border border-wood-200 hover:bg-forest-800 hover:text-white hover:scale-110 transition-all duration-300" aria-label="Instagram">
+                            <i class="fa-brands fa-instagram text-base"></i>
+                        </a>
+                        <a href="#" class="w-11 h-11 rounded-full bg-white text-forest-800 flex items-center justify-center border border-wood-200 hover:bg-forest-800 hover:text-white hover:scale-110 transition-all duration-300" aria-label="Facebook">
+                            <i class="fa-brands fa-facebook-f text-base"></i>
+                        </a>
+                        <a href="#" class="w-11 h-11 rounded-full bg-white text-forest-800 flex items-center justify-center border border-wood-200 hover:bg-forest-800 hover:text-white hover:scale-110 transition-all duration-300" aria-label="LINE">
+                            <i class="fa-brands fa-line text-base"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Reservation Form Column -->
+                <div class="lg:col-span-7 bg-white p-8 sm:p-10 rounded-3xl border border-wood-200 shadow-md">
+                    <form id="contactForm" onsubmit="handleFormSubmit(event)" class="space-y-6">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                            <div>
+                                <label for="name" class="block text-xs font-bold text-forest-900 mb-2">您的姓名 *</label>
+                                <input type="text" id="name" required placeholder="例如：林先生 / 小姐" 
+                                       class="w-full px-4 py-3.5 rounded-xl bg-wood-50 border border-wood-200 focus:outline-none focus:border-forest-800 focus:ring-2 focus:ring-forest-800/20 text-sm transition-all">
+                            </div>
+                            <div>
+                                <label for="phone" class="block text-xs font-bold text-forest-900 mb-2">聯絡電話 *</label>
+                                <input type="tel" id="phone" required placeholder="0912-345-678" 
+                                       class="w-full px-4 py-3.5 rounded-xl bg-wood-50 border border-wood-200 focus:outline-none focus:border-forest-800 focus:ring-2 focus:ring-forest-800/20 text-sm transition-all">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label for="interest" class="block text-xs font-bold text-forest-900 mb-2">感興趣的家具類別</label>
+                            <select id="interest" class="w-full px-4 py-3.5 rounded-xl bg-wood-50 border border-wood-200 focus:outline-none focus:border-forest-800 focus:ring-2 focus:ring-forest-800/20 text-sm font-medium transition-all">
+                                <option value="all">全室家具整體規劃</option>
+                                <option value="bookcase">書櫃 / 收納立櫃系列</option>
+                                <option value="table">餐桌 / 書桌系列</option>
+                                <option value="chair">主人椅 / 單椅系列</option>
+                                <option value="bed">懸浮床 / 臥室系列</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label for="message" class="block text-xs font-bold text-forest-900 mb-2">預約或諮詢備註</label>
+                            <textarea id="message" rows="4" placeholder="請填寫希望預約的日期或特殊的尺寸客製需求..." 
+                                      class="w-full px-4 py-3.5 rounded-xl bg-wood-50 border border-wood-200 focus:outline-none focus:border-forest-800 focus:ring-2 focus:ring-forest-800/20 text-sm resize-none transition-all"></textarea>
+                        </div>
+
+                        <button type="submit" data-cursor="SUBMIT" class="btn-progressive w-full py-4 bg-forest-800 hover:bg-forest-900 text-wood-50 rounded-xl font-bold transition-all duration-300 shadow-lg">
+                            送出預約專人諮詢
+                        </button>
+                    </form>
+
+                    <!-- Form Success Notification -->
+                    <div id="formSuccessMsg" class="hidden text-center py-12 space-y-4">
+                        <div class="w-16 h-16 rounded-full bg-forest-100 text-forest-800 flex items-center justify-center text-2xl mx-auto animate-bounce">
+                            <i class="fa-solid fa-check"></i>
+                        </div>
+                        <h3 class="text-2xl font-serif-tc font-bold text-forest-900">預約申請已成功送出</h3>
+                        <p class="text-sm text-forest-700 leading-relaxed max-w-md mx-auto">
+                            我們的專屬軟裝顧問將於 24 小時內電話聯繫您確認細節，期待在沐木體驗館與您相見！
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-forest-900 text-wood-200 py-12 border-t border-wood-800">
+        <div class="max-w-7xl mx-auto px-6 md:px-12 flex flex-col md:flex-row items-center justify-between gap-6 text-xs">
+            <div class="flex items-center gap-3">
+                <div class="w-8 h-8 rounded-xl bg-wood-200 text-forest-900 flex items-center justify-center font-serif font-bold text-sm">
+                    沐
+                </div>
+                <span class="font-serif-tc font-bold text-sm text-wood-100">沐木 MORI WOOD</span>
+                <span class="text-wood-400">© 2026 MORI WOOD Furniture. All Rights Reserved.</span>
+            </div>
+
+            <div class="flex gap-6 text-wood-300 font-medium">
+                <a href="#home" class="hover:text-wood-100 transition-colors">隱私權條款</a>
+                <a href="#home" class="hover:text-wood-100 transition-colors">服務條款</a>
+                <a href="#home" class="hover:text-wood-100 transition-colors">原木保養手冊</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- PRODUCT QUICK VIEW MODAL -->
+    <div id="productModal" class="fixed inset-0 z-50 bg-forest-900/80 backdrop-blur-md flex items-center justify-center p-4 hidden">
+        <div class="bg-white rounded-3xl max-w-2xl w-full overflow-hidden shadow-2xl relative">
+            <button onclick="closeProductModal()" class="absolute top-4 right-4 w-10 h-10 rounded-full bg-wood-100 text-forest-800 flex items-center justify-center z-10 hover:bg-wood-200 transition-colors">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div class="grid grid-cols-1 sm:grid-cols-2">
+                <div class="h-64 sm:h-auto bg-wood-100 relative">
+                    <img id="modalImg" class="w-full h-full object-cover" src="" alt="Modal Product">
+                </div>
+                <div class="p-8 flex flex-col justify-between space-y-4">
+                    <div>
+                        <span id="modalCategory" class="text-xs font-bold text-wood-600 uppercase tracking-wider block mb-1"></span>
+                        <h3 id="modalTitle" class="text-2xl font-serif-tc font-bold text-forest-900 mb-3"></h3>
+                        <p id="modalDesc" class="text-xs text-forest-700 leading-relaxed mb-4"></p>
+                    </div>
+                    <div class="space-y-4 pt-4 border-t border-wood-100">
+                        <div class="flex justify-between items-center">
+                            <span class="text-xs font-bold text-forest-700">建議售價</span>
+                            <span id="modalPrice" class="font-black text-forest-900 text-2xl font-sans"></span>
+                        </div>
+                        <a href="#contact" onclick="closeProductModal()" class="block w-full text-center py-3.5 bg-forest-800 hover:bg-forest-900 text-wood-50 rounded-xl text-xs font-bold shadow-md transition-all">
+                            預約門市體驗與專人客製
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JS SCRIPT ENGINE -->
+    <script>
+        window.addEventListener('DOMContentLoaded', () => {
+            gsap.registerPlugin(ScrollTrigger);
+
+            /* -------------------------------------------------------------
+               0. DYNAMIC CURSOR FOLLOWER & INTERACTION ENGINE
+            ------------------------------------------------------------- */
+            const cursor = document.getElementById('cursorFollower');
+            const cursorText = document.getElementById('cursorText');
+            let mouseX = 0, mouseY = 0;
+            let cursorX = 0, cursorY = 0;
+
+            window.addEventListener('mousemove', (e) => {
+                mouseX = e.clientX;
+                mouseY = e.clientY;
+            });
+
+            function renderCursor() {
+                cursorX += (mouseX - cursorX) * 0.15;
+                cursorY += (mouseY - cursorY) * 0.15;
+                if (cursor) {
+                    cursor.style.left = `${cursorX}px`;
+                    cursor.style.top = `${cursorY}px`;
+                }
+                requestAnimationFrame(renderCursor);
+            }
+            renderCursor();
+
+            // Custom hover triggers for cursor
+            const hoverTargets = document.querySelectorAll('[data-cursor], button, a, .product-card');
+            hoverTargets.forEach(el => {
+                el.addEventListener('mouseenter', () => {
+                    const label = el.getAttribute('data-cursor') || 'VIEW';
+                    cursor.classList.add('cursor-active');
+                    cursorText.innerText = label;
+                    cursorText.classList.remove('opacity-0');
+                });
+                el.addEventListener('mouseleave', () => {
+                    cursor.classList.remove('cursor-active');
+                    cursorText.classList.add('opacity-0');
+                });
+            });
+
+            /* -------------------------------------------------------------
+               1. 3D CARD TILT MICRO-INTERACTION
+            ------------------------------------------------------------- */
+            const tiltCards = document.querySelectorAll('.card-tilt');
+            tiltCards.forEach(card => {
+                card.addEventListener('mousemove', (e) => {
+                    const rect = card.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    const centerX = rect.width / 2;
+                    const centerY = rect.height / 2;
+
+                    const rotateX = ((y - centerY) / centerY) * -6;
+                    const rotateY = ((x - centerX) / centerX) * 6;
+
+                    card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-4px)`;
+                });
+
+                card.addEventListener('mouseleave', () => {
+                    card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0px)`;
+                });
+            });
+
+            /* -------------------------------------------------------------
+               2. ORGANIC TEXT ENTRANCE ANIMATIONS (ELEGANT REVEALS)
+            ------------------------------------------------------------- */
+
+            // Hero Text Sequential Entrance
+            const heroTl = gsap.timeline({ defaults: { duration: 1.1, ease: 'power3.out' } });
+
+            heroTl.to('.hero-text-1', { y: '0%', opacity: 1, filter: 'blur(0px)', delay: 0.2 })
+                  .to('.hero-text-2', { y: '0%', opacity: 1, filter: 'blur(0px)' }, '-=0.8')
+                  .to('.hero-text-3', { y: '0%', opacity: 1, filter: 'blur(0px)' }, '-=0.8');
+
+            // Section Title Reveals
+            gsap.to('.story-title-reveal', {
+                y: '0%', opacity: 1, duration: 1, ease: 'power3.out',
+                scrollTrigger: { trigger: '#brand-story', start: 'top 75%' }
+            });
+
+            gsap.to('.product-title-reveal', {
+                y: '0%', opacity: 1, duration: 1, ease: 'power3.out',
+                scrollTrigger: { trigger: '#products', start: 'top 75%' }
+            });
+
+            gsap.to('.exp-title-reveal', {
+                y: '0%', opacity: 1, duration: 1, ease: 'power3.out',
+                scrollTrigger: { trigger: '#experience', start: 'top 75%' }
+            });
+
+            /* -------------------------------------------------------------
+               3. TEXT SCALE & MOVEMENT ANIMATIONS ON SCROLL
+            ------------------------------------------------------------- */
+            gsap.fromTo('#philosophyScaleText', 
+                { scale: 0.82, opacity: 0.3, filter: 'blur(6px)' },
+                { 
+                    scale: 1.12, opacity: 1, filter: 'blur(0px)', ease: 'power2.out',
+                    scrollTrigger: {
+                        trigger: '.philosophy-scale-wrap',
+                        start: 'top 85%', end: 'top 35%', scrub: 0.8
+                    }
+                }
+            );
+
+            gsap.to('.story-watermark', {
+                xPercent: -20, ease: 'none',
+                scrollTrigger: {
+                    trigger: '#brand-story', start: 'top bottom', end: 'bottom top', scrub: 1
+                }
+            });
+
+            /* -------------------------------------------------------------
+               4. MOBILE NAV & STICKY NAVBAR
+            ------------------------------------------------------------- */
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const closeMenuBtn = document.getElementById('closeMenuBtn');
+            const mobileMenu = document.getElementById('mobileMenu');
+            const mobileLinks = document.querySelectorAll('.mobile-link');
+
+            mobileMenuBtn?.addEventListener('click', () => mobileMenu.classList.remove('hidden'));
+            closeMenuBtn?.addEventListener('click', () => mobileMenu.classList.add('hidden'));
+            mobileLinks.forEach(l => l.addEventListener('click', () => mobileMenu.classList.add('hidden')));
+
+            const navbar = document.getElementById('navbar');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 40) {
+                    navbar.classList.add('bg-wood-50/90', 'backdrop-blur-md', 'shadow-xs', 'py-4');
+                    navbar.classList.remove('py-6');
+                } else {
+                    navbar.classList.remove('bg-wood-50/90', 'backdrop-blur-md', 'shadow-xs', 'py-4');
+                    navbar.classList.add('py-6');
+                }
+            });
+
+            /* -------------------------------------------------------------
+               5. PRODUCT FILTERING CONTROLLER
+            ------------------------------------------------------------- */
+            const filterBtns = document.querySelectorAll('.filter-btn');
+            const productCards = document.querySelectorAll('.product-card');
+
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    filterBtns.forEach(b => {
+                        b.classList.remove('active', 'bg-forest-800', 'text-wood-50', 'shadow-xs');
+                        b.classList.add('bg-white', 'text-forest-800');
+                    });
+
+                    btn.classList.add('active', 'bg-forest-800', 'text-wood-50', 'shadow-xs');
+                    btn.classList.remove('bg-white', 'text-forest-800');
+
+                    const filter = btn.getAttribute('data-filter');
+
+                    productCards.forEach(card => {
+                        if (filter === 'all' || card.getAttribute('data-category') === filter) {
+                            card.style.display = 'flex';
+                            gsap.fromTo(card, { opacity: 0, y: 15 }, { opacity: 1, y: 0, duration: 0.4 });
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    });
+                });
+            });
+
+        });
+
+        /* -------------------------------------------------------------
+           6. INTERACTIVE DOUBLE-WAY STORY CONTROLLERS
+        ------------------------------------------------------------- */
+        function updateMoodState(val) {
+            const ratio = val / 100;
+            const moodContainer = document.getElementById('moodContainer');
+            const moodImage = document.getElementById('moodImage');
+            const moodBadge = document.getElementById('moodBadge');
+            const moodSub = document.getElementById('moodSub');
+            const moodTitle = document.getElementById('moodTitle');
+            const moodDesc = document.getElementById('moodDesc');
+
+            const statRelax = document.getElementById('statRelax');
+            const statTactile = document.getElementById('statTactile');
+
+            statRelax.innerText = `${Math.round(40 + ratio * 58)}%`;
+            statTactile.innerText = `${Math.round(20 + ratio * 80)}%`;
+
+            if (ratio > 0.6) {
+                moodContainer.style.backgroundColor = '#F5EFE6';
+                moodImage.src = 'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&q=80&w=800';
+                moodBadge.innerHTML = '🌲 森林沉浸狀態 (100% 沐木狀態)';
+                moodSub.innerText = 'STATE: FOREST OASIS';
+                moodTitle.innerText = '心靈放鬆 ‧ 森林呼吸居所';
+                moodDesc.innerText = '觸摸溫潤手感的原木邊角，空氣中瀰漫著微微檜木與胡桃木芬多精。身心自然沉靜下來，都市的焦慮在此被全然洗滌。';
+            } else if (ratio > 0.3) {
+                moodContainer.style.backgroundColor = '#E7D8C5';
+                moodImage.src = 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&q=80&w=800';
+                moodBadge.innerHTML = '🍃 漸入佳境 (平衡狀態)';
+                moodSub.innerText = 'STATE: BALANCED HARMONY';
+                moodTitle.innerText = '尋回寧靜 ‧ 慢下來的生活步調';
+                moodDesc.innerText = '當天然木質融入家中的點滴，緊繃的神經開始放鬆。原木的紋理撫平了一天的疲憊。';
+            } else {
+                moodContainer.style.backgroundColor = '#E5E7EB';
+                moodImage.src = 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&q=80&w=800';
+                moodBadge.innerHTML = '🏙️ 都市緊繃狀態 (缺乏原木療癒)';
+                moodSub.innerText = 'STATE: URBAN CHAOS';
+                moodTitle.innerText = '嘈雜緊繃 ‧ 冷冰冰的都市空間';
+                moodDesc.innerText = '人工合成板材與冷硬的人工線條，無法提供心靈療癒與依靠。家變成了充斥壓力與匆忙的暫存處。';
+            }
+        }
+
+        const storyStepsData = {
+            1: {
+                tag: 'FSC CERTIFIED FOREST',
+                title: '來自永續森林的溫暖恩賜',
+                text: '我們僅選用經過永續管理認證的百年成材原木。每砍伐一棵樹，便在林場補種兩棵新苗，讓自然的循環生生不息，同時為家具注入最純粹大自然氣息。',
+                img: 'https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&q=80&w=800'
+            },
+            2: {
+                tag: '30-YEAR ARTISAN CRAFT',
+                title: '30年匠人手作榫卯對接',
+                text: '捨棄大量化學膠水與金屬釘扣，傳承古老榫卯工藝。木頭與木頭之間以咬合咬的精密木榫銜接，讓家具結構穩固耐用，經歷數十年歲月依然嚴絲合縫。',
+                img: 'https://images.unsplash.com/photo-1504148455328-c376907d081c?auto=format&fit=crop&q=80&w=800'
+            },
+            3: {
+                tag: 'FOOD-GRADE PLANT OIL FINISH',
+                title: '德國食品級植物塗油打磨',
+                text: '拒絕封閉式毒性漆塗層，使用德國進口天然植物油打磨。油份滲透木纖維內部滋養，保留木質表面微孔，使家具能夠順暢呼吸並釋放天然香氣。',
+                img: 'https://images.unsplash.com/photo-1540518614846-7ede433c5172?auto=format&fit=crop&q=80&w=800'
+            },
+            4: {
+                tag: 'LIFELONG COMPANIONSHIP',
+                title: '走進您的居家，相伴終生',
+                text: '每一件完成的沐木作品走進您的家庭，成為與家人共享歡笑、靜心閱讀與安心睡眠的療癒港灣，隨時間推移，木色愈發醇厚有光澤。',
+                img: 'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&q=80&w=800'
+            }
+        };
+
+        function selectStoryStep(stepNum) {
+            document.querySelectorAll('.story-step-btn').forEach((btn, idx) => {
+                if (idx + 1 === stepNum) {
+                    btn.classList.add('bg-forest-800', 'text-wood-50', 'border-forest-800');
+                    btn.classList.remove('bg-white', 'text-forest-900', 'border-wood-200');
+                } else {
+                    btn.classList.remove('bg-forest-800', 'text-wood-50', 'border-forest-800');
+                    btn.classList.add('bg-white', 'text-forest-900', 'border-wood-200');
+                }
+            });
+
+            const data = storyStepsData[stepNum];
+            document.getElementById('stepTag').innerText = data.tag;
+            document.getElementById('stepTitle').innerText = data.title;
+            document.getElementById('stepText').innerText = data.text;
+            document.getElementById('stepImg').src = data.img;
+
+            gsap.fromTo('#stepCard', { opacity: 0.7, y: 10 }, { opacity: 1, y: 0, duration: 0.4 });
+        }
+
+        /* -------------------------------------------------------------
+           7. MODAL & FORM HANDLERS
+        ------------------------------------------------------------- */
+        function openProductModal(title, category, price, desc, imgSrc) {
+            document.getElementById('modalTitle').innerText = title;
+            document.getElementById('modalCategory').innerText = category;
+            document.getElementById('modalPrice').innerText = price;
+            document.getElementById('modalDesc').innerText = desc;
+            document.getElementById('modalImg').src = imgSrc;
+            document.getElementById('productModal').classList.remove('hidden');
+        }
+
+        function closeProductModal() {
+            document.getElementById('productModal').classList.add('hidden');
+        }
+
+        function handleFormSubmit(e) {
+            e.preventDefault();
+            document.getElementById('contactForm').classList.add('hidden');
+            document.getElementById('formSuccessMsg').classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>
